@@ -1,3 +1,4 @@
+import pickle
 import numpy as np
 
 import matplotlib.pyplot as plt
@@ -14,10 +15,13 @@ X[:, 0] = X[:, 0]/(256**3)
 X = scale(X)
 
 
-kmeans = cluster.KMeans(n_clusters=6)
-kmeans.fit(X)
-labels = kmeans.labels_
-print kmeans.labels_
+# kmeans = cluster.KMeans(n_clusters=6)
+# kmeans.fit(X)
+kmeans = pickle.load(open('womens.km', 'rb'))
+labels = kmeans.predict(X)
+# pickle.dump(kmeans, open('womens.km', 'w+'))
+# labels = kmeans.labels_
+# print kmeans.labels_
 
 print data[labels==0]
 
@@ -28,6 +32,8 @@ plt.scatter(X[labels==3][:, 0], X[labels==3][:, 1], color='purple')
 plt.scatter(X[labels==4][:, 0], X[labels==4][:, 1], color='orange')
 plt.scatter(X[labels==5][:, 0], X[labels==5][:, 1], color='y')
 plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], color='black')
+plt.ylabel('Type')
+plt.xlabel('Color')
 plt.show()
 
 labels = np.reshape(kmeans.labels_,(len(kmeans.labels_), 1))
