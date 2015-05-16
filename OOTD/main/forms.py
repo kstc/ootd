@@ -12,7 +12,6 @@ class UploadForm(forms.Form):
 		('7', 'tops')
 	)
 	men_choices = (
-		('1', 'accessories'),
 		('2', 'pants'),
 		('3', 'shirts'),
 		('4', 'shorts'),
@@ -20,4 +19,4 @@ class UploadForm(forms.Form):
 	)
 	
 	sex = forms.ChoiceField(widget=forms.RadioSelect, choices=(('1', 'Men'), ('2', 'women')))
-	clothe_type = forms.ChoiceField(choices=(women_choices + men_choices))
+	clothing_type = forms.ChoiceField(choices=(women_choices + men_choices))
