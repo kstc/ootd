@@ -22,17 +22,18 @@ def get_data(filename):
 
 	return data, X
 
-def create_kmeans(load, X=None, n=6):
-	if not load and X and n is None:
-		raise Exception("Number of clusters must be specified if kmeans model is not loaded")
+def load_kmeans(filename):
+	if not file_exists(filename):
+		raise Exception(filename + " does not exist!")
+	print "Loading Kmeans model..."
+	kmeans = pickle.load(open('womens.km', 'rb'))
 
-	if load and isfile("womens.km"):
-		print "Loading Kmeans model..."
-		kmeans = pickle.load(open('womens.km', 'rb'))
-	else:
-		print "Performing K-means on dataset X..."
-		kmeans = cluster.KMeans(n_clusters=n)
-		kmeans.fit(X)
+	return kmeans
+
+def train_kmeans(X, n):
+	print "Performing K-means on dataset X..."
+	kmeans = cluster.KMeans(n_clusters=n)
+	kmeans.fit(X)
 
 	return kmeans
 
@@ -47,11 +48,11 @@ def plot_kmeans(X, labels, num_clusters):
 
 def save_clusters(data, labels, num_clusters):
 	for i in range(0, num_clusters):
-		np.savetxt('data_' + i + '.csv', data[labels==i], fmt='%s', delimiter=',')
+		np.savetxt('data_' + str(i) + '.csv', data[labels==i], fmt='%s', delimiter=',')
 
 raw_data, X = get_data("data_set_women.csv")
 
-kmeans = create_kmeans(load=True)
+kmeans = load_kmeans("womens.km")
 
 plot_kmeans(X, kmeans.labels_, 6)
 
