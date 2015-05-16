@@ -31,7 +31,7 @@ def create_kmeans(X=None, load=True):
 
 	return kmeans
 
-def plot_kmeans(X, labels_):
+def plot_kmeans(X, labels):
 	plt.scatter(X[labels==0][:, 0], X[labels==0][:, 1], color='r')
 	plt.scatter(X[labels==1][:, 0], X[labels==1][:, 1], color='b')
 	plt.scatter(X[labels==2][:, 0], X[labels==2][:, 1], color='g')
@@ -43,7 +43,7 @@ def plot_kmeans(X, labels_):
 	plt.xlabel('Color')
 	plt.show()
 
-def save_clusters(raw_data, labels):
+def save_clusters(data, labels):
 	np.savetxt('data_0.csv', data[labels==0], fmt='%s', delimiter=',')
 	np.savetxt('data_1.csv', data[labels==1], fmt='%s', delimiter=',')
 	np.savetxt('data_2.csv', data[labels==2], fmt='%s', delimiter=',')
