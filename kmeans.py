@@ -22,42 +22,40 @@ def get_data(filename):
 
 	return data, X
 
-def create_kmeans(X=None, load=True):
-	if isfile("womens.km") and X is None:
+def create_kmeans(load, X=None, n=6):
+	if not load and X and n is None:
+		raise Exception("Number of clusters must be specified if kmeans model is not loaded")
+
+	if load and isfile("womens.km"):
+		print "Loading Kmeans model..."
 		kmeans = pickle.load(open('womens.km', 'rb'))
 	else:
-		kmeans = cluster.KMeans(n_clusters=6)
+		print "Performing K-means on dataset X..."
+		kmeans = cluster.KMeans(n_clusters=n)
 		kmeans.fit(X)
 
 	return kmeans
 
-def plot_kmeans(X, labels):
-	plt.scatter(X[labels==0][:, 0], X[labels==0][:, 1], color='r')
-	plt.scatter(X[labels==1][:, 0], X[labels==1][:, 1], color='b')
-	plt.scatter(X[labels==2][:, 0], X[labels==2][:, 1], color='g')
-	plt.scatter(X[labels==3][:, 0], X[labels==3][:, 1], color='purple')
-	plt.scatter(X[labels==4][:, 0], X[labels==4][:, 1], color='orange')
-	plt.scatter(X[labels==5][:, 0], X[labels==5][:, 1], color='y')
+def plot_kmeans(X, labels, num_clusters):
+	colors = ['red', 'blue', 'green', 'purple', 'orange', 'yellow']
+	for i in range(0, num_clusters):
+		plt.scatter(X[labels==i][:, 0], X[labels==i][:, 1], color=colors[i])
 	plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], color='black')
 	plt.ylabel('Type')
 	plt.xlabel('Color')
 	plt.show()
 
-def save_clusters(data, labels):
-	np.savetxt('data_0.csv', data[labels==0], fmt='%s', delimiter=',')
-	np.savetxt('data_1.csv', data[labels==1], fmt='%s', delimiter=',')
-	np.savetxt('data_2.csv', data[labels==2], fmt='%s', delimiter=',')
-	np.savetxt('data_3.csv', data[labels==3], fmt='%s', delimiter=',')
-	np.savetxt('data_4.csv', data[labels==4], fmt='%s', delimiter=',')
-	np.savetxt('data_5.csv', data[labels==5], fmt='%s', delimiter=',')
+def save_clusters(data, labels, num_clusters):
+	for i in range(0, num_clusters):
+		np.savetxt('data_' + i + '.csv', data[labels==i], fmt='%s', delimiter=',')
 
 raw_data, X = get_data("data_set_women.csv")
 
-kmeans = create_kmeans(None)
+kmeans = create_kmeans(load=True)
 
-plot_kmeans(X, kmeans.labels_)
+plot_kmeans(X, kmeans.labels_, 6)
 
-save_clusters(raw_data, kmeans.labels_)
+save_clusters(raw_data, kmeans.labels_, 6)
 
 
 
