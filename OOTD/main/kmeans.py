@@ -29,13 +29,13 @@ def get_data(filename):
 def load_kmeans(filename):
 	if not file_exists(filename):
 		raise Exception(filename + " does not exist!")
-	print "Loading Kmeans model..."
+	# print "Loading Kmeans model..."
 	kmeans = pickle.load(open(filename, 'rb'))
 
 	return kmeans
 
 def train_kmeans(X, n, filename):
-	print "Performing K-means on dataset X..."
+	# print "Performing K-means on dataset X..."
 	kmeans = cluster.KMeans(n_clusters=n)
 	kmeans.fit(X)
 
@@ -57,12 +57,12 @@ def save_clusters(data, labels, num_clusters, sex):
 		np.savetxt(sex + '_data_' + str(i) + '.csv', data[labels==i], fmt='%s', delimiter=',')
 
 def get_similar(input_data, kmeans, dataset):
-	# Convert input_data to numpy array
+	# Get data and labels
 	raw_data, X = get_data(dataset)
 	labels = kmeans.labels_
-	
+
 	# Append new input to entire dataset and scale
-	temp = raw_data[:, 1:] 
+	temp = raw_data[:, 1:]
 	temp = np.vstack((temp, input_data))
 	temp = np.array(temp, dtype=float)
 	temp[:, 0] = temp[:, 0]/(256**3)
@@ -72,16 +72,16 @@ def get_similar(input_data, kmeans, dataset):
 	data = temp[-1]
 
 	label = kmeans.predict(data)
-	
+
 	# Get scaled samples from cluster
 	temp_2 = temp[labels==label]
-	
+
 	# Get raw samples from cluster
 	cluster = raw_data[labels==label]
-	
+
 	distances = [(euclidean(data, temp_2[i]), cluster[i][0]) for i in range(len(cluster))]
 	same = [d[1] for d in sorted(distances, key=lambda tup: tup[0])]
-	return same[:5]
+	return same[:7]
 
 
 # raw_data, X = get_data("data_set_women.csv")

@@ -1,0 +1,72 @@
+html {
+    font-family: sans-serif;
+    background: url('bg.png');
+}
+
+.main-container {
+    margin: 40px auto;
+    width: 900px;
+}
+
+.images {
+    float: right;
+    width: 500px;
+    text-align: center;
+}
+
+.similar-images {
+    max-height: 470px;
+    overflow-x: none;
+    overflow-y: auto;
+}
+
+form, .input-image {
+    display: block;
+    width: 300px;
+    padding: 20px;
+    overflow: hidden;
+    text-align: left;
+}
+
+.input-image {
+    height: 180px !important;
+}
+
+.input-image>img {
+    display: block;
+    height: 170px !important;
+}
+
+ul, li {
+    list-style: none;
+}
+
+form > p label {
+    font-size: .8em;
+}
+
+input, select {
+    border-style: none !important;
+    border-radius: 2px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+select {
+    min-width: 140px;
+    margin: 0 auto;
+}
+
+input[type="submit"] {
+    background: black;
+    color: white;
+    font-size: 1.2em;
+}
+
+img {
+    height: 200px;
+    max-width: 280px;
+    margin: 5px;
+    border: 3px solid black;
+}
+
