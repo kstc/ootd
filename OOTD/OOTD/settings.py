@@ -84,4 +84,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-UPLOAD_DIRECTORY = "/home/timoysu/ootd/OOTD/main/static/uploaded/"
+UPLOAD_DIRECTORY = "/Users/rl-008/Documents/OOTD/ootd/OOTD/main/static/uploaded/"

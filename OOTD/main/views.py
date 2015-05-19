@@ -42,15 +42,14 @@ def upload(request):
         input_data = [get_dominant_color(im), clothing_type]
 
         if sex == '1':
-            kmeans = load_kmeans('mens.km')
+            kmeans = load_kmeans('mens10.km')
             dataset = 'data_set_men.csv'
         elif sex == '2':
-            kmeans = load_kmeans('womens.km')
+            kmeans = load_kmeans('womens4.km')
             dataset = 'data_set_women.csv'
 
         similar_items = get_similar(input_data, kmeans, dataset)
         similar_items = [static('img/' + i) for i in similar_items]
-
         return render(request, 'index.html', {'form': UploadForm(request.POST, request.FILES),
                                              'img': similar_items,
                                              'uploaded': static('uploaded/' + uploaded_filename)})

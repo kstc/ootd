@@ -36,7 +36,7 @@ def load_kmeans(filename):
 
 def train_kmeans(X, n, filename):
 	# print "Performing K-means on dataset X..."
-	kmeans = cluster.KMeans(n_clusters=n)
+	kmeans = cluster.KMeans(n_clusters=n, random_state=10)
 	kmeans.fit(X)
 
 	pickle.dump(kmeans, open(filename, 'w+'))
@@ -44,7 +44,7 @@ def train_kmeans(X, n, filename):
 	return kmeans
 
 def plot_kmeans(X, labels, num_clusters):
-	colors = ['red', 'blue', 'green', 'purple', 'orange', 'yellow']
+	colors = ['red', 'blue', 'green', 'purple', 'orange', 'yellow', 'cyan', 'magenta', 'gray', 'brown']
 	for i in range(0, num_clusters):
 		plt.scatter(X[labels==i][:, 0], X[labels==i][:, 1], color=colors[i])
 	plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], color='black')
@@ -84,14 +84,14 @@ def get_similar(input_data, kmeans, dataset):
 	return same[:7]
 
 
-# raw_data, X = get_data("data_set_women.csv")
+# raw_data, X = get_data("data_set_men.csv")
 
-# kmeans = load_kmeans("womens.km")
-# # kmeans = train_kmeans(X, 6, 'womens.km')
+# # kmeans = load_kmeans("womens.km")
+# kmeans = train_kmeans(X, 10, 'mens10.km')
 
-# # # plot_kmeans(X, kmeans.labels_, 6)
+# plot_kmeans(X, kmeans.labels_, 10)
 
-# # save_clusters(raw_data, kmeans.labels_, 6, 'women')
+# save_clusters(raw_data, kmeans.labels_, 4, 'men')
 
 # color = get_dominant_color(Image.open('gw2.jpg'))
 # clothing_type = '3'

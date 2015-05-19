@@ -50,19 +50,22 @@ def get_dominant_color(image, n_colors=3, show=False):
     # Sort by cluster sizes, the larger the cluster, the more dominant
     cluster_sizes  = dict(itemfreq(labels))
     sorted_cluster = sorted(cluster_sizes.items(), key=operator.itemgetter(1), reverse=True)
+    # print clusters
+    # print sorted_cluster
 
     # Loop through list of cluster indices, sorted by cluster size
     dominant = None
     for c in sorted_cluster:
         index = c[0]
         # If cluster values are not equal to the values in px1-px4, it is not background! THIS IS IT
-        if not px1 == list(clusters[index]) or px2 == list(clusters[index]) \
-                or px3 == list(clusters[index]) or px4 == list(clusters[index]):
+        if not (px1 == list(clusters[index]) or px2 == list(clusters[index])
+                or px3 == list(clusters[index]) or px4 == list(clusters[index])):
             dominant = list(clusters[index])
             break
-    if dominant == None: # Was not able to extract, just get first dominant color
-        dominant = list(clusters[0][0])
-    print dominant
+    if dominant == None: # Was not able to extract, just get second dominant color
+        dominant = list(clusters[1])
+    # for i in range(len(dominant)):
+    #     dominant[i] = dominant[i] - 255
     dominant = (int(dominant[0]) * 65536) + (int(dominant[1]) * 256) + int(dominant[2])
     return dominant
 
